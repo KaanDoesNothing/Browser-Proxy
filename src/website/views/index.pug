@@ -1,0 +1,82 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title View
+        script(src="/static/js/modules/socket.io-3.1.3.min.js")
+        script(src="/static/js/modules/jquery-3.6.0.min.js")
+
+        link(rel="stylesheet", type="text/css", href="/static/css/bulma.css")
+
+        script.
+            window.socket = io();
+
+    body()
+        nav(class="navbar is-dark")
+            div(class="navbar-menu")
+                div(class="navbar-start")
+                    a(class="navbar-item", id="web_browser_navigation_go_back", data-navigation-action="go_back")
+                        img(src="/static/img/left.png")
+                    a(class="navbar-item", id="web_browser_navigation_go_forward", data-navigation-action="go_forward")
+                        img(src="/static/img/right.png")
+                    a(class="navbar-item", id="web_browser_navigation_reload", data-navigation-action="reload")
+                        img(src="/static/img/recurring-appointment.png")
+                    a(class="navbar-item", id="web_browser_navigation_go_home")
+                        img(src="/static/img/home.png")
+                div(class="navbar-item")
+                    form(id="web_browser_url_bar_form", method="get", action="/")
+                        input(class="input is-darker", id="web_browser_url_bar", name="url")
+
+                div(class="navbar-end")
+                    label(class="navbar-item", id="status")="Status: Unknown"
+
+        div(id="web_browser")
+            img(id="screen")
+        script(defer, src="/static/js/index.js")
+
+        style.
+            .is-dark {
+                background-color: #35363A !important;
+            }
+
+            .is-darker {
+                background-color: #292A2D !important;
+                color: #FFFFFF;
+            }
+
+            body::-webkit-scrollbar {
+                display: none;
+            }
+
+            body {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+
+            .navbar {
+                min-height: 0px;
+            }
+
+            .navbar-menu {
+                padding: 0px !important; 
+            }
+
+            #web_browser {
+                display: table;
+                overflow: hidden;
+                width: 100%;
+                height: 100%;
+            }
+
+            #screen {
+                width: 100%;
+                height: 100%;
+            }
+
+            #web_browser_url_bar {
+                width: 500px;
+                height: 30px !important;
+                border-radius: 20px;
+            }
