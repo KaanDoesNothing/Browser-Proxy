@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "main": "build/index.js",
   "license": "MIT",
+  "scripts": {
+    "tsc": "tsc",
+    "postinstall": "npm run tsc",
+    "build": "npm run tsc"
+  },
   "dependencies": {
     "express": "^4.17.1",
     "pug": "^3.0.2",
