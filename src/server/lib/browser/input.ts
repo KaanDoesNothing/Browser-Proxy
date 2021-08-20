@@ -30,10 +30,16 @@ export default async ({socket}: {socket: Socket}) => {
                 await page.mouse.up().catch(err => console.log(err));
 
                 let focusedOn = await page.evaluate(() => {
-                    return document.activeElement.tagName;
+                    let active = document.activeElement;
+
+                    return {
+                        tagName: active.tagName,
+                        type: active.getAttribute("type") || "Unknown"
+                    };
+                    // return document.activeElement.tagName;
                 });
 
-                if(focusedOn === "INPUT") {
+                if(focusedOn.tagName === "INPUT" && focusedOn.type !== "submit") {
                     socket.emit("event", {type: "show_keyboard"});
                 }
 
