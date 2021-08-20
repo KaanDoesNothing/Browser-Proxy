@@ -25,18 +25,18 @@ export default async ({socket}: {socket: Socket}) => {
                 break;
             case "mouse_down":
                 await page.mouse.down().catch(err => console.log(err));
+                break;
+            case "mouse_up":
+                await page.mouse.up().catch(err => console.log(err));
+
                 let focusedOn = await page.evaluate(() => {
                     return document.activeElement.tagName;
                 });
 
                 if(focusedOn === "INPUT") {
-                    console.log(focusedOn);
                     socket.emit("event", {type: "show_keyboard"});
                 }
 
-                break;
-            case "mouse_up":
-                await page.mouse.up().catch(err => console.log(err));
                 break;
             case "scroll_wheel":
                 let direction: any = e.data === 100 ? "ArrowDown" : "ArrowUp";
