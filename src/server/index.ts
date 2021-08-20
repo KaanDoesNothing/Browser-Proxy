@@ -4,4 +4,4 @@ app.get("/", (req, res) => {
     return res.render("index");
 });
 
-start(5000);
+start(parseInt(process.env.PORT) ?? 5000);
