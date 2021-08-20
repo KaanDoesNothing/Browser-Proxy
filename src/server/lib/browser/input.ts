@@ -36,7 +36,6 @@ export default async ({socket}: {socket: Socket}) => {
                         tagName: active.tagName,
                         type: active.getAttribute("type") || "Unknown"
                     };
-                    // return document.activeElement.tagName;
                 });
 
                 if(focusedOn.tagName === "INPUT" && focusedOn.type !== "submit") {

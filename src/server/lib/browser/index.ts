@@ -35,6 +35,9 @@ io.on("connection", async (socket) => {
         startStreaming();
 
         socket.emit("event", {type: "set_url", data: page.url()});
+
+        page.emulateMediaFeatures([{
+            name: "prefers-color-scheme", value: "dark" }]);
     });
 
     socket.on("disconnect", async () => {
