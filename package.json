@@ -4,6 +4,7 @@
   "main": "build/index.js",
   "license": "MIT",
   "scripts": {
+    "start": "node .",
     "tsc": "tsc",
     "postinstall": "npm run tsc",
     "build": "npm run tsc"

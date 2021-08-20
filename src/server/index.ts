@@ -4,4 +4,6 @@ app.get("/", (req, res) => {
     return res.render("index");
 });
 
-start(parseInt(process.env.PORT) ?? 5000);
+let port = parseInt(process.env.PORT) || 5000;
+
+start(port);
