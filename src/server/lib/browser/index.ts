@@ -1,4 +1,4 @@
-import {io} from "../server";
+import {app, io} from "../server";
 import {createBrowser, getBrowser, getPage, setBrowser} from "./browser";
 
 import socket_screen from "./screen";

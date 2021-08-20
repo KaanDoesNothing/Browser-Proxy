@@ -21,10 +21,14 @@ export default async ({socket}: {socket: Socket}) => {
                 await page.mouse.move(e.data.x, e.data.y).catch(err => console.log(err));
                 break;
             case "mouse_down":
-                await page.mouse.down(e.data.x, e.data.y).catch(err => console.log(err));
+                await page.mouse.down().catch(err => console.log(err));
                 break;
             case "mouse_up":
-                await page.mouse.up(e.data.x, e.data.y).catch(err => console.log(err));
+                await page.mouse.up().catch(err => console.log(err));
+                break;
+            case "scroll_wheel":
+                let direction: any = e.data === 100 ? "ArrowDown" : "ArrowUp";
+                await page.keyboard.press(direction);
                 break;
             default:
                 return;

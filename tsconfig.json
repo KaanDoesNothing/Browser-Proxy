@@ -8,6 +8,7 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
+    "noEmitHelpers":  false,
     "outDir": "build"
   },
   "exclude": [

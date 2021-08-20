@@ -73,6 +73,10 @@ class Manager {
             }
         }));
 
+        $(window).on("wheel", (e) => {
+            this.socket.emit("input", {type: "scroll_wheel", data: e.originalEvent.deltaY});
+        });
+
         $("#screen").on("mousedown", ((e) => {
             let cache = this.cache["mouse_position"] = {x: e.clientX, y: e.clientY};
 

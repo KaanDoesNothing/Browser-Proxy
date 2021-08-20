@@ -31,5 +31,5 @@ export let setBrowser = (id, browser) => {
 }
 
 export let getPage = async (id) => {
-    return (await getBrowser(id).pages())[0];
+    return (await getBrowser(id).pages())[0] as puppeteer.Page;
 }
