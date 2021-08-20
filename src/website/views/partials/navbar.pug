@@ -1,0 +1,17 @@
+nav(class="navbar is-dark")
+    div(class="navbar-menu")
+        div(class="navbar-start")
+            a(class="navbar-item", id="web_browser_navigation_go_back", data-navigation-action="go_back")
+                img(src="/static/img/left.png")
+            a(class="navbar-item", id="web_browser_navigation_go_forward", data-navigation-action="go_forward")
+                img(src="/static/img/right.png")
+            a(class="navbar-item", id="web_browser_navigation_reload", data-navigation-action="reload")
+                img(src="/static/img/recurring-appointment.png")
+            a(class="navbar-item", id="web_browser_navigation_go_home")
+                img(src="/static/img/home.png")
+        div(class="navbar-item")
+            form(id="web_browser_url_bar_form", method="get", action="/")
+                input(class="input is-darker", id="web_browser_url_bar", name="url")
+
+        div(class="navbar-end")
+            label(class="navbar-item", id="status")="Status: Unknown"

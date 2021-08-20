@@ -7,7 +7,9 @@ class Manager {
         this.socket.on("connection", () => console.log("working"));
 
         this.socket.emit("init_data", {
-            viewport: this.getScreenSize()
+            viewport: this.getScreenSize(),
+            quality: parseInt(localStorage.getItem("quality")) || 20,
+            refresh_rate: parseInt(localStorage.getItem("refresh_rate")) || 500
         });
 
         this.lauchEvents();
@@ -49,6 +51,10 @@ class Manager {
         $(document).keyup((e) => {
             if(!this.isHoveringOverScreen()) return;
             this.socket.emit("input", {type: "key", data: { key: e.key, shiftKey: e.shiftKey, action: "up" }});
+        });
+
+        $(window).on("resize", () => {
+            this.socket.emit("set_viewport", this.getScreenSize());
         });
 
         $("a[data-navigation-action]").click((e) => {

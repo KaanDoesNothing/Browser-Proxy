@@ -6,15 +6,15 @@ import socket_navigation from "./navigation";
 import socket_input from "./input";
 
 io.on("connection", async (socket) => {
-    let screenRefreshInterval
+    let screenRefreshInterval;
 
     socket.emit("event", {type: "set_status", data: "Connected"});
 
-    let initData = await new Promise((resolve, reject) => {
+    let initData: {viewport: {height: number, width: number}, quality: number, refresh_rate: number} = await new Promise((resolve, reject) => {
         socket.on("init_data", (data) => {
             resolve(data);
 
-            if(!data.viewport) reject(false);
+            if(!data.viewport) reject({});
         });
     });
 
@@ -37,7 +37,6 @@ io.on("connection", async (socket) => {
     });
 
     socket.on("disconnect", async () => {
-        console.log("Disconnected");
         clearInterval((screenRefreshInterval));
         await getBrowser(socket.id).close();
     });
@@ -51,12 +50,14 @@ io.on("connection", async (socket) => {
             const screenshot = await page.screenshot({
                 fullPage: false,
                 omitBackground: false,
-                quality: 20,
+                quality: initData.quality,
                 type: "jpeg"
-            }).catch(err => console.log(err));
+            }).catch(err => {
+                clearInterval(screenRefreshInterval);
+            });
 
             socket.emit("event", {type: "update_frame", data: screenshot});
-        }, 10);
+        }, initData.refresh_rate);
     }
 
 });
