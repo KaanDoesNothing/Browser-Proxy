@@ -9,6 +9,7 @@ html(lang="en")
 
         script(src="/static/js/modules/socket.io-3.1.3.min.js")
         script(src="/static/js/modules/jquery-3.6.0.min.js")
+        script(src="https://cdn.jsdelivr.net/npm/simple-keyboard@latest/build/index.js")
 
         link(rel="stylesheet", type="text/css", href="/static/css/bulma.css")
 
@@ -20,8 +21,9 @@ html(lang="en")
 
         div(id="web_browser")
             img(id="screen")
-        script(defer, src="/static/js/index.js")
+        script(defer, src=`/static/js/index.js?${Date.now()}`)
 
+        input(id="input_box", style="display: none;")
         input(id="file_upload", style="display: none;", type="file", name="file")
 
         style.

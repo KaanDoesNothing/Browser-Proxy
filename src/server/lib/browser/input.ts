@@ -17,11 +17,23 @@ export default async ({socket}: {socket: Socket}) => {
                 }
 
                 break;
+            case "text":
+                await page.keyboard.type(e.data);
+                break;
             case "mouse_move":
                 await page.mouse.move(e.data.x, e.data.y).catch(err => console.log(err));
                 break;
             case "mouse_down":
                 await page.mouse.down().catch(err => console.log(err));
+                let focusedOn = await page.evaluate(() => {
+                    return document.activeElement.tagName;
+                });
+
+                if(focusedOn === "INPUT") {
+                    console.log(focusedOn);
+                    socket.emit("event", {type: "show_keyboard"});
+                }
+
                 break;
             case "mouse_up":
                 await page.mouse.up().catch(err => console.log(err));

@@ -13,6 +13,7 @@ io.on("connection", async (socket) => {
     let initData: {viewport: {height: number, width: number}, quality: number, refresh_rate: number} = await new Promise((resolve, reject) => {
         socket.on("init_data", (data) => {
             resolve(data);
+            console.log(data);
 
             if(!data.viewport) reject({});
         });

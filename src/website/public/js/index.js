@@ -4,6 +4,8 @@ class Manager {
 
         this.cache = {};
 
+        this.mobile = false;
+
         this.socket.on("connection", () => console.log("working"));
 
         this.socket.emit("init_data", {
@@ -16,6 +18,10 @@ class Manager {
 
         this.elements = {
             screen: document.querySelector("#screen")
+        }
+
+        if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+            this.mobile = true;
         }
     }
 
@@ -36,6 +42,14 @@ class Manager {
                     break;
                 case "update_frame":
                     this.updateFrame(event.data);
+                    break;
+                case "show_keyboard":
+                    if(this.mobile) {
+                        let text = prompt("What would you like to enter?");
+                        if(text.length < 1) return;
+
+                        socket.emit("input", {type: "text", data: text});
+                    }
                     break;
                 default:
                     console.log("Unknown event");
@@ -104,8 +118,8 @@ class Manager {
 
     getScreenSize() {
         return {
-            width: $("#screen").width(),
-            height: window.innerHeight - $("#screen").offset().top
+            width: parseInt(($("#screen").width()).toFixed()),
+            height: parseInt((window.innerHeight - $("#screen").offset().top).toFixed())
         }
     }
 
