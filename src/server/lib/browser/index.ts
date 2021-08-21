@@ -6,28 +6,6 @@ import socket_screen from "./screen";
 import socket_navigation from "./navigation";
 import socket_input from "./input";
 
-app.get("/html", async (req, res) => {
-    let browser = await createBrowser({});
-    let page = (await browser.pages())[0];
-
-    await page.goto("https://duckduckgo.com");
-
-    let html = await page.content();
-
-    let $ = cheerio.load(html);
-
-    let elements = $("*");
-    for(let i in elements) {
-        let element = $(i).css()
-
-        console.log(element.css);
-        // let styles = await page.evaluate(() => {})
-
-    }
-
-    return res.send(html);
-});
-
 io.on("connection", async (socket) => {
     let screenRefreshInterval;
 
