@@ -1,11 +1,9 @@
-import cheerio from "cheerio";
-import {app, io} from "../server";
+import {io} from "../server";
 import {createBrowser, getBrowser, getPage, setBrowser} from "./browser";
 
 import socket_screen from "./screen";
 import socket_navigation from "./navigation";
 import socket_input from "./input";
-import Screenshotter from "../screenshotter";
 
 io.on("connection", async (socket) => {
     let screenRefreshInterval;
@@ -45,36 +43,5 @@ io.on("connection", async (socket) => {
         clearInterval((screenRefreshInterval));
         await getBrowser(socket.id).close();
 
-        // screenshotter.stop();
     });
-
-    async function startStreaming() {
-        screenRefreshInterval = setInterval(async () => {
-            const page = await getPage(socket.id);
-
-            if(page.isClosed()) return;
-
-            const screenshot = await page.screenshot({
-                fullPage: false,
-                omitBackground: false,
-                quality: initData.quality,
-                type: "jpeg"
-            }).catch(err => {
-                clearInterval(screenRefreshInterval);
-            });
-
-            socket.emit("event", {type: "update_frame", data: screenshot});
-        }, initData.refresh_rate);
-    }
-
-    let screenshotter = new Screenshotter();
-    await screenshotter.run(page);
-
-    screenshotter.on("ready", () => console.log("Screenshotter ready"));
-    screenshotter.on("screenshot", (frameObject) => {
-        console.log("Frame Update");
-        socket.emit("event", {type: "update_frame", data: new Buffer(frameObject.data, "base64")});
-    });
-
-
 });
