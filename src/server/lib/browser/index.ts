@@ -6,8 +6,6 @@ import socket_navigation from "./navigation";
 import socket_input from "./input";
 
 io.on("connection", async (socket) => {
-    let screenRefreshInterval;
-
     socket.emit("event", {type: "set_status", data: "Connected"});
 
     let initData: {viewport: {height: number, width: number}, quality: number, refresh_rate: number} = await new Promise((resolve, reject) => {
@@ -31,8 +29,6 @@ io.on("connection", async (socket) => {
     let page = await getPage(socket.id);
 
     page.on("load", () => {
-        if(screenRefreshInterval) clearInterval(screenRefreshInterval);
-
         socket.emit("event", {type: "set_url", data: page.url()});
 
         page.emulateMediaFeatures([{
@@ -40,8 +36,6 @@ io.on("connection", async (socket) => {
     });
 
     socket.on("disconnect", async () => {
-        clearInterval((screenRefreshInterval));
         await getBrowser(socket.id).close();
-
     });
 });
