@@ -77,6 +77,15 @@ class Manager {
             this.socket.emit("navigation", {type: action});
         });
 
+        $("#web_browser_url_bar_form").submit((e) => {
+            e.preventDefault();
+
+            console.log("test");
+
+            this.socket.emit("navigation", {type: "goto", data: $("#web_browser_url_bar").val()});
+        });
+
+
         $(document).on("mousemove", ((e) => {
             let cache = this.cache["mouse_position"] = {x: e.clientX, y: e.clientY};
 

@@ -1,8 +1,16 @@
-import puppeteer from "puppeteer"
+import puppeteer from "puppeteer";
+
+import puppeteerExtra from "puppeteer-extra"
+import stealthPlugin from "puppeteer-extra-plugin-stealth";
+import adBlockerPlugin from "puppeteer-extra-plugin-adblocker";
+
+puppeteerExtra.use(stealthPlugin());
+puppeteerExtra.use(adBlockerPlugin());
+
 import { browsers } from "./cache";
 
 export let createBrowser = async ({viewport}: any) => {
-    const browser = await puppeteer.launch({
+    const browser = await puppeteerExtra.launch({
         headless: true,
         defaultViewport: viewport || null,
         args: [
