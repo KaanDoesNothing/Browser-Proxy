@@ -1,9 +1,14 @@
-import {io} from "../server";
+import {app, io} from "../server";
 import {createBrowser, getBrowser, getPage, setBrowser} from "./browser";
 
 import socket_screen from "./screen";
 import socket_navigation from "./navigation";
 import socket_input from "./input";
+import {screenshots} from "./cache";
+
+app.get("/screenshot", (req, res) => {
+    res.send(screenshots[req.query.id]);
+});
 
 io.on("connection", async (socket) => {
     socket.emit("event", {type: "set_status", data: "Connected"});

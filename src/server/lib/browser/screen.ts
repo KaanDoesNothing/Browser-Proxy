@@ -1,6 +1,7 @@
 import { Socket } from "socket.io";
 import { getPage } from "./browser";
 import Screenshotter from "../screenshotter";
+import {screenshots} from "./cache";
 
 let screenshotter = new Screenshotter();
 
@@ -17,6 +18,8 @@ export default async ({socket}: {socket: Socket}) => {
     screenshotter.on("ready", () => console.log("Screenshotter ready"));
     screenshotter.on("screenshot", (frameObject) => {
         console.log("Frame Update");
-        socket.emit("event", {type: "update_frame", data: new Buffer(frameObject.data, "base64")});
+        // socket.emit("event", {type: "update_frame", data: new Buffer(frameObject.data, "base64")});
+        screenshots[socket.id] = new Buffer(frameObject.data, "base64");
+        socket.emit("event", {type: "update_frame"});
     });
 }

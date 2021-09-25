@@ -7,7 +7,7 @@ import adBlockerPlugin from "puppeteer-extra-plugin-adblocker";
 puppeteerExtra.use(stealthPlugin());
 puppeteerExtra.use(adBlockerPlugin());
 
-import { browsers } from "./cache";
+import { browsers, screenshots } from "./cache";
 
 export let createBrowser = async ({viewport}: any) => {
     const browser = await puppeteerExtra.launch({

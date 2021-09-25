@@ -1,6 +1,5 @@
 import { Socket } from "socket.io";
 import { getPage } from "./browser";
-import {keyboardMap} from "../keyboardMap";
 
 export default async ({socket}: {socket: Socket}) => {
     let page = await getPage(socket.id);

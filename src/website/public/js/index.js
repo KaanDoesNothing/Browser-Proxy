@@ -41,6 +41,7 @@ class Manager {
                     this.socket.emit("navigation", {type: "goto", data: url});
                     break;
                 case "update_frame":
+                    // this.elements.screen.src = `/screenshot?id=${this.socket.id}?date=${Date.now()}`;
                     this.updateFrame(event.data);
                     break;
                 case "show_keyboard":
@@ -140,8 +141,10 @@ class Manager {
         $("#web_browser_url_bar").val(text);
     }
 
-    updateFrame(image) {
-        let blob = new Blob([image]);
+    async updateFrame(image) {
+        let res = await fetch(`/screenshot?id=${this.socket.id}`).then(res => res.blob());
+
+        let blob = new Blob([res]);
 
         let reader = new FileReader();
         reader.onload = (event) => {
