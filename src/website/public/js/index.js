@@ -42,7 +42,7 @@ class Manager {
                     break;
                 case "update_frame":
                     // this.elements.screen.src = `/screenshot?id=${this.socket.id}?date=${Date.now()}`;
-                    this.updateFrame(event.data);
+                    await this.updateFrame(event.data);
                     break;
                 case "show_keyboard":
                     if(this.mobile) {
