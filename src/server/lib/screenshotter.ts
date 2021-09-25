@@ -1,4 +1,3 @@
-import massScreenshots from "puppeteer-mass-screenshots";
 import {EventEmitter} from "events";
 import {Page} from "puppeteer";
 
