@@ -5,6 +5,7 @@ import {createBrowser, getBrowser, getPage, setBrowser} from "./browser";
 import socket_screen from "./screen";
 import socket_navigation from "./navigation";
 import socket_input from "./input";
+import Screenshotter from "../screenshotter";
 
 io.on("connection", async (socket) => {
     let screenRefreshInterval;
@@ -33,7 +34,6 @@ io.on("connection", async (socket) => {
 
     page.on("load", () => {
         if(screenRefreshInterval) clearInterval(screenRefreshInterval);
-        startStreaming();
 
         socket.emit("event", {type: "set_url", data: page.url()});
 
@@ -44,6 +44,8 @@ io.on("connection", async (socket) => {
     socket.on("disconnect", async () => {
         clearInterval((screenRefreshInterval));
         await getBrowser(socket.id).close();
+
+        // screenshotter.stop();
     });
 
     async function startStreaming() {
@@ -64,5 +66,15 @@ io.on("connection", async (socket) => {
             socket.emit("event", {type: "update_frame", data: screenshot});
         }, initData.refresh_rate);
     }
+
+    let screenshotter = new Screenshotter();
+    await screenshotter.run(page);
+
+    screenshotter.on("ready", () => console.log("Screenshotter ready"));
+    screenshotter.on("screenshot", (frameObject) => {
+        console.log("Frame Update");
+        socket.emit("event", {type: "update_frame", data: new Buffer(frameObject.data, "base64")});
+    });
+
 
 });
