@@ -142,9 +142,9 @@ class Manager {
     }
 
     async updateFrame(image) {
-        let res = await fetch(`/screenshot?id=${this.socket.id}`).then(res => res.blob());
+        // let res = await fetch(`/screenshot?id=${this.socket.id}`).then(res => res.blob());
 
-        let blob = new Blob([res]);
+        let blob = new Blob([image]);
 
         let reader = new FileReader();
         reader.onload = (event) => {
